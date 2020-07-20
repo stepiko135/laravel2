@@ -14,9 +14,8 @@ class BoardController extends Controller
      */
     public function index()
     {
-        $posts = Board::all();
-        return view('boards.index',['posts' => $posts]);
-
+        $posts = Board::with('user')->get();
+        return view('boards.index',compact('posts'));
     }
 
     /**
@@ -43,17 +42,6 @@ class BoardController extends Controller
         unset($form['_token']);
         $board->fill($form)->save();
         return redirect('/boards');        
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

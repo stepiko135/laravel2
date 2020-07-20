@@ -22,4 +22,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/boards', 'BoardController');
+Route::resource('/boards', 'BoardController',['except'=>'show']);
