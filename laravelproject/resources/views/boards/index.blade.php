@@ -21,9 +21,34 @@
                 <input type="submit" class="btn btn-danger" value="削除する">
             </form>
             @endif
+            {{-- いいねボタン --}}
+            <form action="/like" method="POST">
+                @csrf
+                @auth
+                @endauth
+                <input type="hidden" value="{{$post->id}}" name='board_id'>
+                <input type="hidden" value="{{Auth::id()}}" name='user_id'>
+                <span class="material-icons ">
+                    @if(App\Like::where('board_id',$post->id)->where('user_id',Auth::id())->exists())
+                    <button type="submit" class="text-reset text-decoration-none">
+                        favorite
+                    </button>
+                    @else
+                    <button type="submit" class="text-reset text-decoration-none">
+                        favorite_border
+                    </button>
+                    @endif
+                </span>
+            </form>
             @endauth
-            <a href="" class="text-reset text-decoration-none"><span class="material-icons">
-                    favorite_border</span></a>
+            @guest
+            <span class="material-icons ">
+                <button class="text-reset text-decoration-none">
+                    favorite_border
+                </button>
+            </span>
+            @endguest
+            <p class="d-inline">{{count(App\Like::where('board_id',$post->id)->get())}}</p>
         </div>
     </div>
     @endforeach

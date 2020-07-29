@@ -14,7 +14,7 @@ class BoardController extends Controller
      */
     public function index()
     {
-        $posts = Board::with('user')->get();
+        $posts = Board::all();
         return view('boards.index',compact('posts'));
     }
 
